@@ -7,7 +7,7 @@ import Auth from './Auth';
 
 const Router: FunctionComponent = () => (
   <Routes>
-    <Route path="auth" element={<Auth />} />
+    <Route path="/auth" element={<Auth />} />
     <Route path="/" element={<Home />} />
   </Routes>
 );

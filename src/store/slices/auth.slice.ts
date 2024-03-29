@@ -24,10 +24,13 @@ const initialState: UserState = {
   status: ERequestStatus.IDLE,
 };
 
-export const authUser = createAsyncThunk('user/auth', async (credentials: AuthCredentials):Promise<User> => {
+export const authUser = createAsyncThunk(
+  'user/auth',
+  async (credentials: AuthCredentials): Promise<User> => {
     const response = await request.post<string, User>('auth', JSON.stringify(credentials));
     return response;
-});
+  },
+);
 
 export const updateUser = createAsyncThunk('user/updateUser', async (user: User) => {
   const { id, ...info } = user;

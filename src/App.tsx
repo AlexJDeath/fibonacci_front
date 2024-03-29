@@ -13,6 +13,9 @@ const App = () => (
       <li>
         <Link to="/about">About</Link>
       </li>
+      <li>
+        <Link to="/auth">Sign In</Link>
+      </li>
     </ul>
     <Router />
   </main>
