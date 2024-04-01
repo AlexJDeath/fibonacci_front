@@ -49,6 +49,8 @@ export const authSlice = createSlice({
         state.status = ERequestStatus.LOADING;
       })
       .addCase(authUser.fulfilled, (_state, action) => {
+        console.log('authUser');
+        console.log(action.payload);
         const state = _state;
         state.status = ERequestStatus.SUCCEEDED;
         state.user = action.payload;
