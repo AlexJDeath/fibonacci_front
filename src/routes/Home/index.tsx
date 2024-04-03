@@ -1,10 +1,10 @@
 import React from 'react';
-import Quote from '../../components/shareds/Quote';
+import ContentLayout from '../../components/layouts/ContentLayout';
 
 const Home = () => (
-  <div className="Home">
-    <Quote />
-  </div>
+  <ContentLayout>
+    <div className="Home" />
+  </ContentLayout>
 );
 
 export default Home;

@@ -5,11 +5,9 @@ import Auth from './routes/Auth';
 import Home from './routes/Home';
 import AuthLayout from './components/layouts/AuthLayout';
 import './styles/vendors.scss';
-import './assets/styles/main.css';
-import './assets/styles/responsive.css';
 import './assets/css/app.css';
 import './assets/css/icons.css';
-import  './assets/css/pace.min.css';
+import './assets/css/pace.min.css';
 
 import { User } from './store/slices/auth.slice';
 import { RootState } from './store';

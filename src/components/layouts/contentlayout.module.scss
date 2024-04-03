@@ -1,0 +1,150 @@
+.wrapper {
+  width: 100%;
+  position: relative;
+
+  .sidebarWrapper {
+    width: 250px;
+    height: calc(100% - 60px);
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    background: rgb(0 0 0 / 15%);
+    border-right: 1px solid rgb(255 255 255 / 15%);
+    z-index: 11;
+    box-shadow: 0 .3rem .8rem rgba(0, 0, 0, .12) !important;
+    transition: all .2s ease-out;
+
+    &[data-simplebar] {
+      position: relative;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      align-content: flex-start;
+      align-items: flex-start
+    }
+
+    .sidebarHeader {
+      width: 250px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      position: fixed;
+      gap: 2em;
+      top: 0;
+      bottom: 0;
+      padding: 0 15px;
+      z-index: 5;
+      background: rgb(255 255 255 / 15%);
+      border-bottom: 1px solid rgb(255 255 255 / 12%);
+
+      .logo {
+        width: 100%;
+        height: auto;
+        display: flex;
+        align-items: center;
+      }
+
+      .toggleIcon {
+        font-size: 22px;
+        cursor: pointer;
+        color: #ffffff;
+      }
+    }
+  }
+  .topHeader {
+    position: fixed;
+    top: 0;
+    left: 250px;
+    right: 0;
+    height: 60px;
+    background: rgb(0 0 0 / 15%);
+    border-bottom: 1px solid rgb(255 255 255 / 15%);
+    z-index: 10;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075)!important;
+    .navLink {
+      padding-right: 0.8rem;
+      padding-left: 0.8rem;
+      color: #ffffff;
+      font-size: 22px;
+    }
+  }
+  &.minimized {
+    .topHeader {
+      left: 70px;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+
+  .wrapper.minimized {
+    .sidebarWrapper {
+      width: 70px;
+
+      .sidebarHeader {
+        justify-content: center;
+        width: 70px;
+      }
+
+      .metismenu {
+        a {
+          justify-content: center
+        }
+
+        .menuTitle {
+          display: none;
+        }
+
+        li ul {
+          display: none
+        }
+
+        li.menu-label {
+          display: none
+        }
+
+        .has-arrow:after {
+          display: none
+        }
+      }
+    }
+
+    .sidebar-wrapper .sidebarHeader {
+      .logo-text {
+        display: none
+      }
+
+      .toggleIcon {
+        display: none;
+      }
+    }
+
+
+    .sidebarWrapper:hover {
+      background-color: #171717;
+      width: 250px;
+
+      .sidebarHeader {
+        width: 250px;
+        background-color: #171717;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+        .logo-text {
+          display: block;
+        }
+
+        .toggleIcon {
+          display: block;
+        }
+      }
+    }
+  }
+
+
+}
+
+
+
+
+

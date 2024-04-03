@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Layout, Button, Row, Col, Typography, Form, Input, Switch } from 'antd';
+import { Button, Form, Input, Switch } from 'antd';
 
 import signinbg from '../../assets/defaultimages/img-signin.png';
 
 import { AuthCredentials, authUser } from '../../store/slices/auth.slice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
+import classes from './auth.module.scss';
+import Spacer from '../../components/ui/Spacer';
+
 function onChange(checked: any) {
   console.log(`switch to ${checked}`);
 }
-const { Title } = Typography;
-const { Footer, Content } = Layout;
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -29,18 +30,14 @@ const Auth = () => {
     console.log('Failed:', errorInfo);
   };
 
-  console.log('user is...');
-  console.log(user);
-
   return (
-    <Layout className="layout-default layout-signin">
-      <Content className="signin">
-        <Row gutter={[24, 0]} justify="center">
-          <Col xs={{ span: 24, offset: 0 }} lg={{ span: 6, offset: 0 }} md={{ span: 6 }}>
-            <Title className="mb-15">Sign In</Title>
-            <Title className="font-regular text-muted" level={5}>
-              Enter your email and password to sign in
-            </Title>
+    <div className={classes.layout}>
+      <Spacer />
+      <div className="container max-w-2xl ">
+        <div className="row">
+          <div className="col-6 col-xs-12">
+            <h1 className="mb-15">Sign In</h1>
+            <h3 className="font-regular text-muted">Enter your email and password to sign in</h3>
             <Form
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
@@ -92,24 +89,19 @@ const Auth = () => {
                 </Link>
               </p>
             </Form>
-          </Col>
-          <Col
-            className="sign-img"
-            style={{ padding: 12 }}
-            xs={{ span: 24 }}
-            lg={{ span: 6 }}
-            md={{ span: 6 }}
-          >
+          </div>
+          <div className="sign-img col-6 col-xs-12">
             <img src={signinbg} alt="" />
-          </Col>
-        </Row>
-      </Content>
-      <Footer>
+          </div>
+        </div>
+      </div>
+      <Spacer />
+      <footer className={classes.footer}>
         <div className="copyright">
           Copyright © 2024 Muse by <a href="#pablo">Fibonacci Team</a>.{' '}
         </div>
-      </Footer>
-    </Layout>
+      </footer>
+    </div>
   );
 };
 
