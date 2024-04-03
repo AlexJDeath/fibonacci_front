@@ -19,8 +19,13 @@ export interface UserState {
   status: ERequestStatus;
 }
 
+const localStoredData = (key: string) => {
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : null;
+};
+
 const initialState: UserState = {
-  user: null,
+  user: localStoredData('user'),
   status: ERequestStatus.IDLE,
 };
 
@@ -31,6 +36,11 @@ export const authUser = createAsyncThunk(
     return response;
   },
 );
+
+export const logoutUser = createAsyncThunk('user/logout', async (): Promise<boolean> => {
+  const response = await request.get<boolean>('logout');
+  return response;
+});
 
 export const updateUser = createAsyncThunk('user/updateUser', async (user: User) => {
   const { id, ...info } = user;
@@ -49,15 +59,30 @@ export const authSlice = createSlice({
         state.status = ERequestStatus.LOADING;
       })
       .addCase(authUser.fulfilled, (_state, action) => {
-        console.log('authUser');
-        console.log(action.payload);
         const state = _state;
         state.status = ERequestStatus.SUCCEEDED;
+        if (action.payload.id) {
+          localStorage.setItem('user', JSON.stringify(action.payload));
+        }
         state.user = action.payload;
       })
       .addCase(authUser.rejected, (_state) => {
         const state = _state;
         state.status = ERequestStatus.FAILED;
+      })
+      .addCase(logoutUser.rejected, (_state) => {
+        const state = _state;
+        state.status = ERequestStatus.FAILED;
+      })
+      .addCase(logoutUser.pending, (_state) => {
+        const state = _state;
+        state.status = ERequestStatus.LOADING;
+      })
+      .addCase(logoutUser.fulfilled, (_state) => {
+        const state = _state;
+        state.status = ERequestStatus.SUCCEEDED;
+        state.user = null;
+        localStorage.removeItem('user');
       })
       .addCase(updateUser.pending, (_state) => {
         const state = _state;
