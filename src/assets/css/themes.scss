@@ -1,0 +1,22 @@
+  span[data-bs-theme="fibonacci"] {
+    --bs-body-color: rgb(255 255 255 / 70%);
+    --bs-body-bg: rgb(0 0 0 / 15%);
+    --bs-secondary-color: rgb(255 255 255 / 70%);
+    --bs-heading-color: #f8f9fa;
+    --bs-border-color: rgb(255 255 255 / 15%);
+
+    .btn-light {
+      --bs-btn-bg: rgb(255 255 255 / 15%);
+      --bs-btn-color: #fff;
+      --bs-btn-border-color: rgb(255 255 255 / 35%);
+    }
+    label {
+      color: var(--bs-body-color);
+    }
+    .form-control:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, .25);
+      border-color: var(--bs-body-bg);
+      outline: 0;
+    }
+  }
+

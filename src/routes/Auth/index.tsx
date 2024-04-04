@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Form, Input, Switch } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { Button, Form } from 'react-bootstrap';
 import signinbg from '../../assets/defaultimages/img-signin.png';
 
 import { AuthCredentials, authUser } from '../../store/slices/auth.slice';
@@ -14,20 +14,30 @@ function onChange(checked: any) {
   console.log(`switch to ${checked}`);
 }
 
+interface AuthForm {
+  email?: string;
+  password?: string;
+}
 const Auth = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
+  const [form, setForm] = useState<AuthForm>({});
   useEffect(() => {
     if (user !== null) {
       navigate('/');
     }
   }, [navigate, user]);
-  const onFinish = (values: object) => {
-    dispatch(authUser(values as AuthCredentials));
+  const setField = (field: string, value: string) => {
+    setForm({
+      ...form,
+      [field]: value,
+    });
   };
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+  const onFinish = (e) => {
+    e.preventDefault();
+    const values: AuthCredentials = { login: form.email!, password: form.password! };
+    dispatch(authUser(values));
   };
 
   return (
@@ -36,58 +46,35 @@ const Auth = () => {
       <div className="container max-w-2xl ">
         <div className="row">
           <div className="col-6 col-xs-12">
-            <h1 className="mb-15">Sign In</h1>
-            <h3 className="font-regular text-muted">Enter your email and password to sign in</h3>
-            <Form
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              layout="vertical"
-              className="row-col"
-            >
-              <Form.Item
-                className="username"
-                label="Email"
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your email!',
-                  },
-                ]}
-              >
-                <Input placeholder="Email" />
-              </Form.Item>
-
-              <Form.Item
-                className="username"
-                label="Password"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password!',
-                  },
-                ]}
-              >
-                <Input placeholder="Password" />
-              </Form.Item>
-
-              <Form.Item name="remember" className="aligin-center" valuePropName="checked">
-                <Switch defaultChecked onChange={onChange} />
-                Remember me
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+            <h3 className="mb-15">Sign In</h3>
+            <div className="font-regular text-muted mb-3">
+              Enter your email and password to sign in
+            </div>
+            <Form className="d-flex flex-column gap-3" onSubmit={onFinish}>
+              <Form.Group>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  onChange={(e) => setField('email', e.target.value)}
+                  placeholder="Enter email"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={(e) => setField('password', e.target.value)}
+                  placeholder="Enter password"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Check type="checkbox" label="Remember me" onChange={onChange} />
+              </Form.Group>
+              <Form.Group>
+                <Button type="submit" className="btn-light w-100">
                   SIGN IN
                 </Button>
-              </Form.Item>
-              <p className="font-semibold text-muted">
-                Don`t have an account?{' '}
-                <Link to="/register" className="text-dark font-bold">
-                  Sign Up
-                </Link>
-              </p>
+              </Form.Group>
             </Form>
           </div>
           <div className="sign-img col-6 col-xs-12">
