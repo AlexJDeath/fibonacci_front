@@ -10,31 +10,28 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import classes from './auth.module.scss';
 import Spacer from '../../components/ui/Spacer';
 
-function onChange(checked: any) {
-  console.log(`switch to ${checked}`);
-}
-
 interface AuthForm {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
+  remember: false;
 }
 const Auth = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const [form, setForm] = useState<AuthForm>({});
+  const [form, setForm] = useState<AuthForm>({ email: '', password: '', remember: false });
   useEffect(() => {
     if (user !== null) {
       navigate('/');
     }
   }, [navigate, user]);
-  const setField = (field: string, value: string) => {
+  const setField = (field: string, value: unknown) => {
     setForm({
       ...form,
       [field]: value,
     });
   };
-  const onFinish = (e) => {
+  const onFinish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const values: AuthCredentials = { login: form.email!, password: form.password! };
     dispatch(authUser(values));
@@ -68,7 +65,11 @@ const Auth = () => {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Check type="checkbox" label="Remember me" onChange={onChange} />
+                <Form.Check
+                  type="checkbox"
+                  label="Remember me"
+                  onChange={() => setField('remember', !form.remember)}
+                />
               </Form.Group>
               <Form.Group>
                 <Button type="submit" className="btn-light w-100">
@@ -85,7 +86,7 @@ const Auth = () => {
       <Spacer />
       <footer className={classes.footer}>
         <div className="copyright">
-          Copyright © 2024 Muse by <a href="#pablo">Fibonacci Team</a>.{' '}
+          Copyright © 2024 <a href="http://fibonacci.com">Fibonacci Team</a>.{' '}
         </div>
       </footer>
     </div>
