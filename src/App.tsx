@@ -5,6 +5,7 @@ import Auth from './routes/Auth';
 import Home from './routes/Home';
 import AuthLayout from './components/layouts/AuthLayout';
 import './styles/vendors.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/css/app.css';
 import './assets/css/themes.scss';
 import './assets/css/icons.css';

@@ -1,0 +1,26 @@
+.preloader {
+  width: 100%;
+  position: relative;
+  .spinner {
+    opacity: 0;
+    pointer-events: none;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -20px;
+    margin-left: -20px;
+
+  }
+
+  &.activated {
+    .spinner {
+      opacity: 1;
+    }
+    *:not(.spinner) {
+      opacity: 0.8;
+      transition: opacity 250ms ease-in-out 0s;
+    }
+  }
+}

@@ -16,7 +16,7 @@ export interface AuthCredentials {
 
 export interface UserState {
   user: User | null;
-  status: ERequestStatus;
+  fetching: ERequestStatus;
 }
 
 const localStoredData = (key: string) => {
@@ -26,7 +26,7 @@ const localStoredData = (key: string) => {
 
 const initialState: UserState = {
   user: localStoredData('user'),
-  status: ERequestStatus.IDLE,
+  fetching: ERequestStatus.IDLE,
 };
 
 export const authUser = createAsyncThunk(
@@ -56,11 +56,11 @@ export const authSlice = createSlice({
     builder
       .addCase(authUser.pending, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.LOADING;
+        state.fetching = ERequestStatus.LOADING;
       })
       .addCase(authUser.fulfilled, (_state, action) => {
         const state = _state;
-        state.status = ERequestStatus.SUCCEEDED;
+        state.fetching = ERequestStatus.SUCCEEDED;
         if (action.payload.id) {
           localStorage.setItem('user', JSON.stringify(action.payload));
         }
@@ -68,39 +68,38 @@ export const authSlice = createSlice({
       })
       .addCase(authUser.rejected, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.FAILED;
+        state.fetching = ERequestStatus.FAILED;
       })
       .addCase(logoutUser.rejected, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.FAILED;
+        state.fetching = ERequestStatus.FAILED;
       })
       .addCase(logoutUser.pending, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.LOADING;
+        state.fetching = ERequestStatus.LOADING;
       })
       .addCase(logoutUser.fulfilled, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.SUCCEEDED;
+        state.fetching = ERequestStatus.SUCCEEDED;
         state.user = null;
         localStorage.removeItem('user');
       })
       .addCase(updateUser.pending, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.LOADING;
+        state.fetching = ERequestStatus.LOADING;
       })
       .addCase(updateUser.fulfilled, (_state, action) => {
         const state = _state;
-        state.status = ERequestStatus.SUCCEEDED;
+        state.fetching = ERequestStatus.SUCCEEDED;
         state.user = action.payload;
       })
       .addCase(updateUser.rejected, (_state) => {
         const state = _state;
-        state.status = ERequestStatus.FAILED;
+        state.fetching = ERequestStatus.FAILED;
       });
   },
 });
 
 export const selectUser = (state: RootState) => state.auth.user;
-export const selectStatus = (state: RootState) => state.auth.status;
 
 export default authSlice.reducer;
